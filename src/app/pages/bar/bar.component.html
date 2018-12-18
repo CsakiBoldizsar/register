@@ -1,0 +1,15 @@
+<section id="bar">
+  <form [formGroup] = "form" (change) = "changing($event)"> 
+    <h2>Bar Form</h2>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id = "name" name = "name" formControlName = "name">
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" id = "email" name = "email" formControlName = "email">
+      </div>
+  </form>
+  <div (click) = "onclick()">Remove</div>
+</section>
+

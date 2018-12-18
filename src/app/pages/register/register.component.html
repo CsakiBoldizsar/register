@@ -1,0 +1,69 @@
+<section id="register">
+  <div class="container">
+    <div class="options">
+      <div class="group">
+          <label for="magan">Magánszemély</label>
+          <input type="radio" id = "magan" value ="magan" name = "who" checked (change) = "changeHandler($event)">
+      </div>
+      <div class="group">
+          <label for="ceg">Cegnek</label>
+          <input type="radio" id = "ceg" value = "ceg" name = "who" (change) = "changeHandler($event)">
+      </div>
+    </div>
+    <div *ngIf = "magan">
+        <form [formGroup] = "registerForm" (ngSubmit) = "register()" class ="magan">
+            <h2>Register form</h2>
+            <div class="form-group">
+              <label for="name">Name</label><br>
+              <input type="text" id = "name" name = "name" formControlName = "name">
+              <div *ngIf = "submitted && f.name.errors" class ="invalid-feedback">
+                <div *ngIf = "f.name.errors.required">A név kötelező</div>
+              </div>
+            </div>
+            <div class="form-group">
+                <label for="email">email</label><br>
+                <input type="email" id = "email" name = "email" formControlName = "email">
+                <div *ngIf = "submitted && f.email.errors" class ="invalid-feedback">
+                    <div *ngIf = "f.email.errors.required">Az email kötelező</div>
+                    <div *ngIf = "f.email.errors.pattern">Az email nem megfelelő formátumu</div>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="Location">Helyszín</label><br>
+                  <input type="text" id = "Location" name = "location" formControlName = "location">
+                  <div *ngIf = "submitted && f.location.errors" class ="invalid-feedback">
+                      <div *ngIf = "f.location.errors.required">A helyszín kötelező</div>
+                    </div>
+                </div>
+                <div>
+                  <h3 class = "new" (click) = "newDiv($event)">Add new element</h3>
+                  <app-bar *ngFor ="let kappas of kappa; let l = first;let i = index;" (remove) = "remove(i)" (valid) = "check($event)"></app-bar>
+                </div>
+              <div class="btn-holder">
+                <input type="submit" value = "Register">
+              </div>
+        </form>
+    </div> 
+    <div *ngIf = "!magan">
+      <form [formGroup] = "cegReg" (ngSubmit) = "register()" (change) = "checkValid()">
+        <div class="form-group">
+          <label for="compname">Cég név</label><br>
+          <input type="text" id = "compname" formControlName = "compName" name = "compname">
+        </div>
+        <div class="form-group">
+            <label for="comploc">Szekhely</label><br>
+            <input type="text" id = "comploc" formControlName = "compLoc" mask = "[9999-9999]">
+          </div>
+          <div>
+              <h3 class = "new" (click) = "newDiv($event)">Add new element</h3>
+              <app-bar *ngFor ="let kappas of kappa; let l = first;let i = index;" (remove) = "remove(i)" (valid) = "check($event)"></app-bar>
+            </div>
+      </form>
+    </div>
+    <div *ngIf = "(magan && registerForm.valid && submitted && valid) || (cegReg.valid && valid)">
+        <div class="content">
+            <h1>Next Content</h1>
+          </div>
+    </div>
+  </div>
+</section>
